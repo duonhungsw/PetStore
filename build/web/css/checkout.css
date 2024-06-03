@@ -1,0 +1,140 @@
+body {
+                font-family: Arial, sans-serif;
+                background-color: #f7f7f7;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                display: flex;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .order-form, .order-summary {
+                padding: 20px;
+            }
+
+            .order-form {
+                flex: 1;
+                border-right: 1px solid #eee;
+            }
+
+            .order-summary {
+                width: 300px;
+            }
+
+            h2, h3 {
+                margin-top: 0;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            .input-group label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .input-group input, .input-group select, .input-group textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .input-group textarea {
+                resize: vertical;
+            }
+
+            .shipping, .payment {
+                margin-top: 20px;
+            }
+
+            .payment-option {
+                display: flex;
+                align-items: center;
+            }
+
+            .payment-option input {
+                margin-right: 10px;
+            }
+
+            .order-summary .product {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .order-summary .product img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+
+            .discount {
+                display: flex;
+                margin-bottom: 20px;
+            }
+
+            .discount input {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                margin-right: 10px;
+            }
+
+            .discount button {
+                padding: 8px 12px;
+                border: none;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .discount button:hover {
+                background-color: #0056b3;
+            }
+
+            .totals p {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0;
+            }
+
+            .order-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .order-button:hover {
+                background-color: #0056b3;
+            }
+
+            .back-to-cart {
+                display: block;
+                text-align: center;
+                margin-top: 10px;
+                color: #007bff;
+                text-decoration: none;
+            }
+
+            .back-to-cart:hover {
+                text-decoration: underline;
+            }
