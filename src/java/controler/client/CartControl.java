@@ -26,11 +26,11 @@ public class CartControl extends HttpServlet {
         CartDAO cartDAO  =new CartDAO();
         Cart cart = cartDAO.getCartByUserId(acc.getAccId());
         List<Cart_Item> list = cartDAO.getListCartItem(cart.getCart_id());
-        
-        for (Cart_Item cart_Item : list) {
-            System.out.println(cart_Item.toString());
-            
-        }
+//        
+//        for (Cart_Item cart_Item : list) {
+//            System.out.println(cart_Item.toString());
+//            
+//        }
         request.setAttribute("CI", list);
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     } 

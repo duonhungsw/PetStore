@@ -24,7 +24,7 @@ public class WardsControl extends HttpServlet {
     throws ServletException, IOException {
         String district_code  = request.getParameter("district_code");
         ProvincesVNDAO dao = new ProvincesVNDAO();
-        List<Wards> list = dao.getWardsByProvincesId(district_code);
+        List<Wards> list = dao.getWardsBydistrictId(district_code);
 
         StringBuilder options = new StringBuilder();
         for (Wards wards : list) {

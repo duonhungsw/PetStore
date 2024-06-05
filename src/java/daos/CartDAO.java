@@ -223,10 +223,12 @@ public class CartDAO extends DBContext {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the exception
+            e.printStackTrace(); 
         }
-        return null; // Return null if no product is found or in case of an error
+        return null; 
     }
+    
+    
 
     public boolean updateCartItemQuantity(int quantity, int cartIteam_id) {
         String sql = "UPDATE Cart_Item SET quanity = ?, total_money = ? WHERE cartItem_id = ?";
@@ -423,7 +425,7 @@ public class CartDAO extends DBContext {
 
         return list;
     }
-
+    
     public void insertCart(int id) {
         String sql = "INSERT INTO [dbo].[Cart] ([acc_Id]) VALUES(?)";
         try {

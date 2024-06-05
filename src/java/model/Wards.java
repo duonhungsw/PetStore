@@ -89,7 +89,6 @@ public class Wards {
         this.administrative_units = administrative_units;
     }
 
-    @Override
     public String toString() {
         return "Wards{" + "code=" + code + ", name=" + name + ", name_en=" + name_en + ", full_name=" + full_name + ", full_name_en=" + full_name_en + ", code_name=" + code_name + ", districts=" + districts + ", administrative_units=" + administrative_units + '}';
     }

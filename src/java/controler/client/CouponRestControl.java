@@ -22,7 +22,7 @@ public class CouponRestControl extends HttpServlet {
         String keyword = request.getParameter("keyWord");
         OrderDAO dao = new OrderDAO();
         List<Coupon> coupons  = dao.findCouponsByKeyword(keyword);
-        
+        request.setAttribute("coupon", coupons);
         ObjectMapper  mapper  = new ObjectMapper ();
         String json = mapper.writeValueAsString(coupons);
         

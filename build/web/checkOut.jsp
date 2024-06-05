@@ -10,36 +10,177 @@
         <title>Template Catchy Pet</title>
         <link rel="stylesheet" href="css/checkout.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+        <script src="js/jquery-1.11.3.min.js"></script>
         <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f7f7f7;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                display: flex;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                overflow: hidden;
+                margin-top: 300px;
+            }
+
+            .order-form, .order-summary {
+                padding: 20px;
+            }
+
+            .order-form {
+                flex: 1;
+                border-right: 1px solid #eee;
+            }
+
+            .order-summary {
+                width: 900px;
+            }
+
+            h2, h3 {
+                margin-top: 0;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            .input-group label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .input-group input, .input-group select, .input-group textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .input-group textarea {
+                resize: vertical;
+            }
+
+            .shipping, .payment {
+                margin-top: 20px;
+            }
+
+            .payment-option {
+                display: flex;
+                align-items: center;
+            }
+
+            .payment-option input {
+                margin-right: 10px;
+            }
+
+            .order-summary .product {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .order-summary .product img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+
+            .discount {
+                display: flex;
+                margin-bottom: 20px;
+            }
+
+            .discount input {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                margin-right: 10px;
+            }
+
+            .discount button {
+                padding: 8px 12px;
+                border: none;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .discount button:hover {
+                background-color: #0056b3;
+            }
+
+            .totals p {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0;
+            }
+
+            .order-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .order-button:hover {
+                background-color: #0056b3;
+            }
+
+            .back-to-cart {
+                display: block;
+                text-align: center;
+                margin-top: 10px;
+                color: #007bff;
+                text-decoration: none;
+            }
+
+            .back-to-cart:hover {
+                text-decoration: underline;
+            }
+
             .coupon-item {
                 display: flex;
-                justify-content: space-between; /* căn chỉnh các phần tử con theo chiều ngang, đẩy phần tử con thứ hai về phía bên phải */
-                align-items: center; /* căn chỉnh các phần tử con theo chiều dọc */
+                justify-content: space-between;
+                align-items: center;
             }
-
             .coupon-item .coupon {
-                margin-left: auto; /* đẩy phần tử con này về phía bên phải */
+                margin-left: auto;
             }
-
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="order-form">
-                <h2>Template Catchy Pet</h2>
-                <form>
+            <form action="deliveryOrderControl" id="frmCreateOrder" method="post">
+
+                <div class="order-form">
+                    <h2>Template Catchy Pet</h2>
                     <div class="input-group">
                         <label>Email</label>
-                        <input type="email" placeholder="Email" value="${requestScope.user.email}">
+                        <input type="email" id="email" name="email" placeholder="Email" value="${requestScope.user.email}">
                     </div>
                     <div class="input-group">
                         <label>Name</label>
-                        <input type="text" placeholder="Họ và tên" value="${requestScope.user.username}">
+                        <input type="text" id="name" name="name" placeholder="Họ và tên" value="${requestScope.user.username}">
                     </div>
                     <div class="input-group">
                         <label>Phone</label>
-                        <input type="tel" placeholder="Số điện thoại" value="${requestScope.user.phone}">
+                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" value="${requestScope.user.phone}">
                     </div>
                     <div class="input-group">
                         <label>Province</label>
@@ -63,73 +204,154 @@
                     </div>
                     <div class="input-group">
                         <label>Note</label>
-                        <textarea placeholder="Ghi chú"></textarea>
+                        <textarea name="note" id="note" placeholder="Ghi chú"></textarea>
                     </div>
-                </form>
-            </div>
-
-            <div class="payment">
-                <h3>Thanh toán</h3>
-                <div class="payment-option">
-                    <input type="radio" id="cod" name="payment"><br>
-                    <label for="cod">Thanh toán khi giao hàng (COD)</label><br>
-                    <input type="radio" id="cod" name="payment">
-                    <label for="cod">VNPay</label>
                 </div>
-            </div>
-            <div class="order-summary">
-                <%
-                    List listO = (List) request.getAttribute("listO");
-                    int count = (listO != null) ? listO.size() : 0;
-                %>
 
-                <h3>Đơn hàng (<%= count%> sản phẩm)</h3>
-                <c:forEach var="list" items="${requestScope.listO}">
-                    <div class="product">
-                        <img src="${list.prod_id.imageProduct}" alt="Bát inox chống trượt cho chó mèo">
-                        <p>${list.prod_id.nameP} x ${list.quantity}</p>
-                        <span>${list.total_money}đ</span>
+                <div class="payment">
+                    <h3>Thanh toán</h3>
+                    <div class="payment-option">
+                        <c:forEach var="listP" items="${requestScope.listP}">
+                            <input type="radio" id="payment_cod" name="payment" value="${listP.pay_id}">
+                            <label for="payment_cod">${listP.name_pay}</label><br>
+                        </c:forEach>
                     </div>
-                </c:forEach>
-                <div class="discount">
-                    <input type="text" id="keyword" placeholder="Enter keyword">
-                    <button onclick="findCoupon()">Find Coupon</button>
                 </div>
-                <div class="totals">
-                    <p>Tạm tính: <span>${requestScope.totalM}đ</span></p>
-                    <p>Shipping fee: <span class="shipping">-</span></p>
-                    <label for="cod">Coin</label><input type="checkbox" id="cod" name="payment">${requestScope.coin}đ
-                    <div class="results"></div>
-                    <p>Tổng cộng: <span>${requestScope.totalM}đ</span></p>
+
+                <div class="order-summary">
+                    <%
+                        List listO = (List) request.getAttribute("listO");
+                        int count = (listO != null) ? listO.size() : 0;
+                    %>
+                    <h3>Đơn hàng (<%= count%> sản phẩm)</h3>
+                    <c:forEach var="list" items="${requestScope.listO}">
+                        <div class="product">
+                            <img src="${list.prod_id.imageProduct}" alt="Bát inox chống trượt cho chó mèo">
+                            <p>${list.prod_id.nameP} x ${list.quantity}</p>
+                            <span>${list.total_money}đ</span>
+                        </div>
+                    </c:forEach>
+
+                    <div class="discount">
+                        <input type="text" id="keyword" placeholder="Enter keyword">
+                        <button type="button" onclick="findCoupon()">Find Coupon</button>
+                    </div>
+
+                    <div class="totals">
+                        <p>Tạm tính: <span id="subtotal">${requestScope.totalM}đ</span></p>
+                        <p>Shipping fee: <span class="shipping">-</span></p>
+                        <label for="coin">Coin</label>
+                        <input type="checkbox" id="coin" name="coin" value="1">${requestScope.coin}đ
+                        <div class="results"></div>
+                        <p>Discount: <span id="discount">0đ</span></p>
+                        <input type="hidden" name="total_money" id="total_money_field" value="${requestScope.totalM}">
+
+                        <p>Tổng cộng: <span name="totalMoney" id="total">${requestScope.totalM}đ</span></p>
+                    </div>
+                    <input type="submit" value="Order"/>
+
+                    <button type="submit" id="order-button" class="order-button">ĐẶT HÀNG</button>
+                    <a href="cart" class="back-to-cart">Quay về giỏ hàng</a>
                 </div>
-                <button class="order-button">ĐẶT HÀNG</button>
-                <a href="cart" class="back-to-cart">Quay về giỏ hàng</a>
-            </div>
+            </form>
         </div>
+
+
+        <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
+        <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
         <script src="js/order.js"></script>
         <script>
-            function findCoupon() {
-                const keyword = document.getElementById("keyword").value;
-                fetch("/PetStore/coupon-rest-control?keyWord=" + keyword)
-                        .then(response => response.json())
-                        .then(data => {
-                            const resultsDiv = document.querySelector(".results");
-                            resultsDiv.innerHTML = "";
+                            let couponId = null;
+                            function findCoupon() {
+                                keyword = document.getElementById("keyword").value;
+                                fetch("/PetStore/coupon-rest-control?keyWord=" + keyword)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const resultsDiv = document.querySelector(".results");
+                                            resultsDiv.innerHTML = "";
+                                            data.forEach(coupon => {
+                                                const couponElement = document.createElement("div");
+                                                couponElement.id = "coupon-item";
+                                                couponElement.textContent = "Coupon: " + coupon.discount + "đ";
 
-                            data.forEach(coupon => {
-                                const couponElement = document.createElement("div");
-                                couponElement.className = "coupon-item";
-                                couponElement.textContent = "Coupon: " + "               " + coupon.discount + "đ";
+                                                couponElement.addEventListener("click", function () {
+                                                    document.querySelector(".coupon").textContent = coupon.discount + "%";
+                                                    couponId = coupon.id;
+                                                    console.log(couponId);
+                                                });
+                                                resultsDiv.appendChild(couponElement);
+                                            });
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                            }
 
-                                couponElement.addEventListener("click", function () {
-                                    document.querySelector(".coupon").textContent = coupon.discount + "%";
+                            document.getElementById('order-button').addEventListener('click', function (event) {
+                                event.preventDefault();
+
+                                const formData = {
+                                    email: document.getElementById('email').value,
+                                    name: document.getElementById('name').value,
+                                    phone: document.getElementById('phone').value,
+                                    province: document.getElementById('province').value,
+                                    district: document.getElementById('districts').value,
+                                    ward: document.getElementById('wards').value,
+                                    note: document.getElementById('note').value,
+                                    payment: document.querySelector('input[name="payment"]:checked').value,
+                                    total_money: document.getElementById('total').innerText.replace('đ', '').trim(),
+                                    couponId: keyword
+                                };
+
+                                console.log('Form Data:', formData); // For debugging purposes
+
+                                var selectedPaymentMethod = formData.payment;
+
+                                var ajaxUrl = '';
+                                if (selectedPaymentMethod == '1') {
+                                    ajaxUrl = 'deliveryOrderControl';
+                                } else if (selectedPaymentMethod == '2') {
+                                    ajaxUrl = 'payment';
+                                } else {
+                                    ajaxUrl = 'error.jsp';
+                                }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: ajaxUrl,
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify(formData),
+                                    success: function (response) {
+                                        if (ajaxUrl === 'deliveryOrderControl') {
+                                            alert('Order placed successfully!');
+                                            window.location.href = 'thankyou.jsp';
+                                        } else if (ajaxUrl === 'payment') {
+                                            if (response.code === '00') {
+                                                if (window.vnpay) {
+                                                    vnpay.open({width: 768, height: 600, url: response.data});
+                                                } else {
+                                                    location.href = response.data;
+                                                }
+                                                return false;
+                                            } else {
+                                                alert('Payment failed. Please try again.');
+                                            }
+                                        } else {
+                                            alert('An error occurred. Please try again.');
+                                        }
+                                    },
+                                    error: function (error) {
+                                        console.error('Error:', error);
+                                        alert('Error occurred while placing the order.');
+                                    }
                                 });
-
-                                resultsDiv.appendChild(couponElement);
                             });
-                        })
-                        .catch(error => console.error('Error:', error));
-            }
+
+                            function updateTotalMoney() {
+                                const totalMoneySpan = document.getElementById("total");
+                                const totalMoneyField = document.getElementById("total_money_field");
+                                totalMoneyField.value = totalMoneySpan.textContent;
+                            }
+
+                            updateTotalMoney();
         </script>
     </body>
 </html>

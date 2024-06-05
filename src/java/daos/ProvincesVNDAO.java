@@ -173,6 +173,77 @@ public class ProvincesVNDAO extends DBContext {
         }
         return null;
     }
+    
+    public Districts getDistrict(String code) {
+        String sql = "SELECT [code]\n"
+                + "      ,[name]\n"
+                + "      ,[name_en]\n"
+                + "      ,[full_name]\n"
+                + "      ,[full_name_en]\n"
+                + "      ,[code_name]\n"
+                + "      ,[province_code]\n"
+                + "      ,[administrative_unit_id]\n"
+                + "  FROM [dbo].[districts]\n"
+                + "  where code = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Districts districts = new Districts();
+                districts.setCode(rs.getString(1));
+                districts.setName(rs.getString(2));
+                districts.setName_en(rs.getString(3));
+                districts.setFull_name(rs.getString(4));
+                districts.setFull_name_en(rs.getString(5));
+                districts.setCode_name(rs.getString(6));
+                Provinces p = getProvincesById(rs.getString(7));
+                districts.setProvinces(p);
+                Administrative_units unit = getUnitsById(rs.getInt(8));
+                districts.setAdministrative_units(unit);
+
+                return districts;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public Wards getWard(String code) {
+        String sql = "SELECT [code]\n"
+                + "      ,[name]\n"
+                + "      ,[name_en]\n"
+                + "      ,[full_name]\n"
+                + "      ,[full_name_en]\n"
+                + "      ,[code_name]\n"
+                + "      ,[district_code]\n"
+                + "      ,[administrative_unit_id]\n"
+                + "  FROM [dbo].[wards]\n"
+                + "  where [code] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Wards wards = new Wards();
+                wards.setCode(rs.getString(1));
+                wards.setName(rs.getString(2));
+                wards.setName_en(rs.getString(3));
+                wards.setFull_name(rs.getString(4));
+                wards.setFull_name_en(rs.getString(5));
+                wards.setCode_name(rs.getString(6));
+                Districts districts = getDistrictsById(rs.getString(7));
+                wards.setDistricts(districts);
+                Administrative_units unit = getUnitsById(rs.getInt(8));
+                wards.setAdministrative_units(unit);
+
+                return wards;
+
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
     public List<Districts> getDistrictsByProvincesId(String province_code) {
         List<Districts> list = new ArrayList<>();
@@ -211,7 +282,7 @@ public class ProvincesVNDAO extends DBContext {
         return list;
     }
 
-    public List<Wards> getWardsByProvincesId(String district_code) {
+    public List<Wards> getWardsBydistrictId(String district_code) {
         List<Wards> list = new ArrayList<>();
         String sql = "SELECT [code]\n"
                 + "      ,[name]\n"
@@ -251,9 +322,7 @@ public class ProvincesVNDAO extends DBContext {
     
     public static void main(String[] args) {
         ProvincesVNDAO dao = new ProvincesVNDAO();
-        List<Wards> list = dao.getWardsByProvincesId("572");
-        for (Wards wards : list) {
-            System.out.println(wards.toString());
-        }
+        Wards dis = dao.getWard("19231");
+        System.out.println(dis.toString());
     }
 }
