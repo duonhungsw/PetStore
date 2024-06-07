@@ -27,14 +27,14 @@
 
                         <input type="password" class="txt-input border" placeholder="Password" name="user-pass" > 
                         <input type="password" class="txt-input border" placeholder="Re Password" name="user-repeatpass" >
-                        <label for="image">
+<!--                        <label for="image">
                             <img id="imagePreview" src="images/user-male.jpg" class="image-profile" alt="">
                             <select name="gender" class="txt-input border gender-select" id="">
                                 <option value="true">Male</option>
                                 <option value="false">Female</option>
                             </select>
                         </label> 
-                        <input type="file"  name="avatar" id="image" class="image-file">
+                        <input type="file"  name="avatar" id="image" class="image-file">-->
                         <button type="submit" class="btn btn-login border">Submit</button>
 
                         <a href="login" class="btn btn-login border" style="background-color: grey; text-align: center;">Go back</a>

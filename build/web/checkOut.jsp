@@ -172,15 +172,15 @@
                     <h2>Template Catchy Pet</h2>
                     <div class="input-group">
                         <label>Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email" value="${requestScope.user.email}">
+                        <input type="email" readOnly id="email" name="email" placeholder="Email" value="${requestScope.user.email}">
                     </div>
                     <div class="input-group">
                         <label>Name</label>
-                        <input type="text" id="name" name="name" placeholder="Họ và tên" value="${requestScope.user.username}">
+                        <input type="text" readOnly id="name" name="name" placeholder="Họ và tên" value="${requestScope.user.username}">
                     </div>
                     <div class="input-group">
                         <label>Phone</label>
-                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" value="${requestScope.user.phone}">
+                        <input type="text" readOnly id="phone" name="phone" placeholder="Số điện thoại" value="${requestScope.user.phone}">
                     </div>
                     <div class="input-group">
                         <label>Province</label>

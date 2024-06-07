@@ -18,8 +18,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class Config {
      public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:9999/PetStore/cart";
-    public static String vnp_TmnCode = "98K8WB6N";
-    public static String secretKey = "74OFWXX0WYVF3K6ENVVYAIDQZYGOTM3N";
+    public static String vnp_TmnCode = "4IEN3VBN";
+    public static String secretKey = "55AIOFIDNEW7Y9IRI3JMN1OATXV6JI0N";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     public static String md5(String message) {

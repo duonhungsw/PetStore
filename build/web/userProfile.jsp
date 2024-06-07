@@ -10,13 +10,6 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="icon" type="image/png" href="images/dog.png">
 
-        <!--        <style>
-                    .image-profile {
-                        display: block;
-                        max-width: 200px;
-                        margin-top: 10px;
-                    }
-                </style>-->
     </head>
     <body>
         <div class="container">
@@ -27,12 +20,13 @@
                 <h4 style="color: red">${error}</h4>
                 <div class="register-form form active">
                     <form action="updateProfileControl" enctype="multipart/form-data" method="POST">
-                        <input type="text" class="txt-input border" placeholder="Username" name="name" value="${requestScope.account.username}">
-                        <input type="text" class="txt-input border" readOnly placeholder="Email" name="email" value="${requestScope.account.email}">
-                        <input type="password" class="txt-input border" placeholder="Password" name="pass" value="${requestScope.account.pass}">
+                        <input type="text" class="txt-input border" readOnly  name="username" value="${requestScope.account.username}">
+                        <input type="text" class="txt-input border" readOnly name="email" value="${requestScope.account.email}">
+                        <input type="password" class="txt-input border"  name="pass" value="${requestScope.account.pass}">
+                        <input type="text" class="txt-input border" placeholder="Your Name" name="name" value="${requestScope.account.name}">
+                        <input type="text" class="txt-input border" placeholder="Your Phone" name="phone" value="${requestScope.account.phone}">
                         <label for="image">
                             <img id="imagePreview" src="${requestScope.account.image}" class="image-profile" alt="Profile Image">
-                            
                         </label>
                         <input type="file" name="avatar" id="image" class="image-file">
                         <button type="submit" class="btn btn-login border">Submit</button>

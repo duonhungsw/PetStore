@@ -38,12 +38,11 @@ public class UpdateProfileControl extends HttpServlet {
         HttpSession session = request.getSession();
         Account user = (Account) session.getAttribute("LOGIN_USER");
         int account_id = user.getAccId();
-        System.out.println(user.toString());
-        System.out.println(account_id);
-        String name = request.getParameter("name");
         String pass = request.getParameter("pass");
+        String name = request.getParameter("name"); 
+        String phone = request.getParameter("phone");
         Part imagePart = request.getPart("avatar");
-
+        
         String realPath = request.getServletContext().getRealPath(UPLOAD_DIRECTORY);
         String filename = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
         String imagePath = realPath + "/" + filename;
@@ -54,10 +53,18 @@ public class UpdateProfileControl extends HttpServlet {
             }
             if (isImageFile(filename)) {
                 imagePart.write(imagePath);
-
                 AccountDAO accountDAO = new AccountDAO();
-                accountDAO.updateProfile(name, pass,"SavedImages/"+ filename, user.getAccId());
+                System.out.println("accountid"+account_id);
+                Account account = new Account();
+                account.setPass(pass);
+                account.setName(name);
+                account.setPhone(phone);
+                account.setImage( "SavedImages/"+ filename);
+                account.setAccId(account_id);
+                accountDAO.updateProfile(account, account_id);
+                
                 response.sendRedirect("profile");
+                System.out.println("4");
             }
         } catch (Exception e) {
             response.sendRedirect("home");

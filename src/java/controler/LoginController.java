@@ -36,12 +36,15 @@ public class LoginController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         try {
             Account account = accountDAO.login(email, pass);
-//            System.out.println("---------------");
-//            System.out.println(account.toString());
-            if (account == null) {
+            if(account.getStatus() == 0){
+                request.setAttribute("accounterror", "Your account was blocked!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+            if (account == null ) {
                 request.setAttribute("exist", "Wrong login again");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
+            } 
+            else {
                 session.setAttribute("LOGIN_USER", account);
                 int roleId = account.getRole_id().getRole_id();
                 System.out.println(roleId);

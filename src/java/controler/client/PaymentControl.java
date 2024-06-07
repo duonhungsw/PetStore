@@ -175,9 +175,9 @@ public class PaymentControl extends HttpServlet {
             order.setCoup_id(coupons);
             order.setPay_id(pay);
             order.setStatus_id(status);
-            order.setProvinces(province.getFull_name());
-            order.setDistrict(districts.getFull_name());
-            order.setWard(ward.getFull_name());
+            order.setProvinces(province.getName_en());
+            order.setDistrict(districts.getName_en());
+            order.setWard(ward.getName_en());
             order.setPhone(orderData.getPhone());
             order.setNote(orderData.getNote());
             //datetime

@@ -75,7 +75,8 @@
                     <p style="text-align:center">OR</p>
                     <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email/Username" required="" autofocus="">
                     <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Password" required="">
-                    <h4 style="color: red">${exist}</h4>
+                    <h4 style="color: red">${accounterror}</h4>
+                    <h4 style="color: red">${exist}</h4> 
                     <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
                     <a href="forgotPassword" id="forgot_pswd">Forgot password?</a>
                     <hr>

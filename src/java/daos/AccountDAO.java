@@ -341,22 +341,15 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public void updateProfile(String name, String pass, String image, int account_id) {
-
-        String sql = "UPDATE [dbo].[Account]\n"
-                + "   SET [username] = ?\n"
-                + "      ,[pass] = ?\n"
-                + "      ,[image] = ?\n"
-                + " WHERE account_id = ?";
+    public void updateProfile(Account account,int account_id) {
+        String sql = "UPDATE [dbo].[Account] SET pass = ?, name = ?, phone = ?, image = ? WHERE account_id = ?";
         try ( PreparedStatement st = connection.prepareStatement(sql)) {
-
-            st.setString(1, name);
-            st.setString(2, pass);
-            st.setString(3, image);
-            st.setInt(4, account_id);
-
+            st.setString(1, account.getPass());
+            st.setString(2, account.getName());
+            st.setString(3, account.getPhone());
+            st.setString(4, account.getImage());
+            st.setInt(5, account_id);
             st.executeUpdate();
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error updating account: ", e);
         }
@@ -506,18 +499,15 @@ public class AccountDAO extends DBContext {
         int coin = 3;
         String name = "hung";
         String image = null;
-        
 
         AccountDAO accountDAO = new AccountDAO();
         Account acc = accountDAO.getAccountbyID(3);
         System.out.println(acc.toString());
-        
-        
+
 //        List<Account> list = accountDAO.listAccount();
 //        for (Account account : list) {
 //            System.out.println(account);
 //        }
-
     }
 
 }
