@@ -68,7 +68,6 @@
                     <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Sign in</h1>
                     <div class="social-login">
                         <button class="btn social-btn facebook-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span></button>
-                        <button class="btn social-btn google-btn" type="button" onclick="window.location.href = 'https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:9999/PetStore/loginGoogleControl&response_type=code&client_id=821996352898-56ok23j4hbfntl1jotknqno7qubtol1b.apps.googleusercontent.com&approval_prompt=force'">
                             <span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span>
                         </button>
                     </div>

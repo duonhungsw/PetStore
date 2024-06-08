@@ -14,10 +14,8 @@ import java.util.Properties;
 
 public class Email {
 
-    //email: herooreh03@gmail.com
-    //pass: otya kyhd mfbf oplf
-    static final String from = "herooreh03@gmail.com";
-    static final String password = "otyakyhdmfbfoplf";
+    static final String from = "";
+    static final String password = "";
 
     public static boolean sendMail(String to, String tieude, String noidung) {
         // Properties :  khai bao cac thuoc tinh
