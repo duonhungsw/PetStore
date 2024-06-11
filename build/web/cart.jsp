@@ -63,7 +63,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="total-price">${listCart.total_money}</td>
+                                            <td class="total-price" id="total-price">${listCart.total_money}</td>
                                             <td><a href="#" onclick="deleteCartItem(${listCart.id}, event)" class="btn btn-black btn-sm">X</a></td>
                                         </tr>
                                     </c:forEach>
@@ -83,7 +83,7 @@
                             </tr>
 
                             <tr>
-                                <td>Total : $<span id="totalMoney">0.00</span></td>
+                                <td>Total :${requestScope.TMCI} đ<span id="totalMoney"></span></td>
                             </tr>
                         </table>
                         <a href="checkout" class="normal checkout-btn">Proceed to checkout</a>

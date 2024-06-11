@@ -16,6 +16,7 @@ import java.util.List;
 import model.Account;
 import model.Cart;
 import model.Cart_Item;
+import model.Coin;
 import model.Pays;
 import model.Provinces;
 
@@ -37,7 +38,7 @@ public class CheckOutControl extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         int totalMoney = orderDAO.getTotalMoneyOrders(cart.getCart_id());
 
-        int coin = orderDAO.getCoin(acc.getCoin_id().getCoin_id());
+        Coin coin = orderDAO.getCoin(acc.getCoin_id().getCoin_id());
         
         List<Pays> listPayses = orderDAO.listPay();
 

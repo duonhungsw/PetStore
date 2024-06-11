@@ -169,7 +169,7 @@
             <form action="deliveryOrderControl" id="frmCreateOrder" method="post">
 
                 <div class="order-form">
-                    <h2>Template Catchy Pet</h2>
+                    <h2>CheckOut PetStore</h2>
                     <div class="input-group">
                         <label>Email</label>
                         <input type="email" readOnly id="email" name="email" placeholder="Email" value="${requestScope.user.email}">
@@ -180,7 +180,7 @@
                     </div>
                     <div class="input-group">
                         <label>Phone</label>
-                        <input type="text" readOnly id="phone" name="phone" placeholder="Số điện thoại" value="${requestScope.user.phone}">
+                        <input type="text"  id="phone" name="phone" placeholder="Số điện thoại" value="${requestScope.user.phone}">
                     </div>
                     <div class="input-group">
                         <label>Province</label>
@@ -239,16 +239,13 @@
 
                     <div class="totals">
                         <p>Tạm tính: <span id="subtotal">${requestScope.totalM}đ</span></p>
-                        <p>Shipping fee: <span class="shipping">-</span></p>
+                        <p >Shipping fee: <span class="shipping">0đ</span></p>
                         <label for="coin">Coin</label>
-                        <input type="checkbox" id="coin" name="coin" value="1">${requestScope.coin}đ
-                        <div class="results"></div>
-                        <p>Discount: <span id="discount">0đ</span></p>
+                        <input type="checkbox" id="coin" name="coin" value="${requestScope.coin.coin_id}">${requestScope.coin.coinNumber}đ
+                        <div class="results" id="discount"></div>
                         <input type="hidden" name="total_money" id="total_money_field" value="${requestScope.totalM}">
-
                         <p>Tổng cộng: <span name="totalMoney" id="total">${requestScope.totalM}đ</span></p>
                     </div>
-                    <input type="submit" value="Order"/>
 
                     <button type="submit" id="order-button" class="order-button">ĐẶT HÀNG</button>
                     <a href="cart" class="back-to-cart">Quay về giỏ hàng</a>
@@ -261,7 +258,33 @@
         <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
         <script src="js/order.js"></script>
         <script>
-                            let couponId = null;
+                            let discountValue = 0;
+                            let coinValue = parseFloat($('#coin').next().text().replace(/[^0-9.-]+/g, "")) || 0;
+
+                            function updateTotal() {
+                                let subtotal = parseFloat($('#subtotal').text().replace(/[^0-9.-]+/g, ""));
+                                let shippingFee = parseFloat($('.shipping').text().replace(/[^0-9.-]+/g, ""));
+                                let discount = discountValue || 0;
+                                let coin = $('#coin').is(':checked') ? coinValue : 0;
+
+                                let total = subtotal - shippingFee - discount - coin;
+                                $('#total').text(total.toFixed() + 'đ');
+                                $('#total_money_field').val(total.toFixed(2));
+                            }
+
+                            function applyCoupon(discount) {
+                                discountValue = discount;
+                                $('#discount').text(discount + 'đ');
+                                updateTotal();
+                            }
+
+                            $('#coin').change(function () {
+                                updateTotal();
+                            });
+
+                            $(document).ready(function () {
+                                updateTotal();
+                            });
                             function findCoupon() {
                                 keyword = document.getElementById("keyword").value;
                                 fetch("/PetStore/coupon-rest-control?keyWord=" + keyword)
@@ -287,6 +310,9 @@
 
                             document.getElementById('order-button').addEventListener('click', function (event) {
                                 event.preventDefault();
+                                let couponId = document.getElementById("discount").value || null;
+                                let coinId = document.getElementById("coin").checked ? document.getElementById("coin").value : 0;
+
 
                                 const formData = {
                                     email: document.getElementById('email').value,
@@ -298,7 +324,8 @@
                                     note: document.getElementById('note').value,
                                     payment: document.querySelector('input[name="payment"]:checked').value,
                                     total_money: document.getElementById('total').innerText.replace('đ', '').trim(),
-                                    couponId: keyword
+                                    couponId: couponId,
+                                    coinId: coinId
                                 };
 
                                 console.log('Form Data:', formData); // For debugging purposes
@@ -321,7 +348,6 @@
                                     data: JSON.stringify(formData),
                                     success: function (response) {
                                         if (ajaxUrl === 'deliveryOrderControl') {
-                                            alert('Order placed successfully!');
                                             window.location.href = 'thankyou.jsp';
                                         } else if (ajaxUrl === 'payment') {
                                             if (response.code === '00') {
@@ -344,14 +370,6 @@
                                     }
                                 });
                             });
-
-                            function updateTotalMoney() {
-                                const totalMoneySpan = document.getElementById("total");
-                                const totalMoneyField = document.getElementById("total_money_field");
-                                totalMoneyField.value = totalMoneySpan.textContent;
-                            }
-
-                            updateTotalMoney();
         </script>
     </body>
 </html>

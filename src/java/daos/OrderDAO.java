@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Cart;
+import model.Coin;
 import model.Coupon;
 import model.Order_items;
 import model.Orders;
@@ -17,7 +18,7 @@ import model.Status;
 public class OrderDAO extends DBContext {
 
     public int getTotalMoneyOrders(int id) {
-        String sql = "  select sum(total_money)as total from Cart_Item where cart_Id = ? and sta_Id = 1";
+        String sql = "select sum(total_money)as total from Cart_Item where cart_Id = ? and sta_Id = 1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -31,18 +32,31 @@ public class OrderDAO extends DBContext {
         return 0;
     }
 
-    public int getCoin(int id) {
-        String sql = "select numberCoin from Coin where coin_id  = ?";
+    public Coin getCoin(int id) {
+        String sql = "select * from Coin where coin_id  = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                Coin coin = new Coin();
+                coin.setCoin_id(rs.getInt(1));
+                coin.setCoinNumber(rs.getInt(2));
+                return  coin;
             }
         } catch (Exception e) {
         }
-        return 0;
+        return null;
+    }
+    
+    public void resetCoinAccountById(int id){
+        String sql = "update Coin set numberCoin = 0 where coin_id  = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public Coupon getCouponById(int id) {
@@ -84,7 +98,7 @@ public class OrderDAO extends DBContext {
     }
 
     public Status getStatusById(int id) {
-        String sql = "Select * from Coupon where [status_id] = ?";
+        String sql = "Select * from Status where [status_id] = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -250,8 +264,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
-    public Orders getBillOrders() {
+    public Orders getOrderById(int id) {
         String sql = "SELECT [order_id]\n"
                 + "      ,[cart_Id]\n"
                 + "      ,[coup_Id]\n"
@@ -265,35 +278,37 @@ public class OrderDAO extends DBContext {
                 + "      ,[date_time]\n"
                 + "      ,[total_money]\n"
                 + "  FROM [dbo].[Orders]\n"
-                + "  where order_id =  (Select max(order_id) from Orders)";
+                + "  where order_id =  ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 Orders orders = new Orders();
+                orders.setOrder_id(rs.getInt(1));
+                
                 CartDAO cartDAO = new CartDAO();
-                Cart cart = cartDAO.getCartByUserId(rs.getInt(1));
+                Cart cart = cartDAO.getCartByCartId(rs.getInt(2));
                 orders.setCart_id(cart);
 
                 OrderDAO dao = new OrderDAO();
-                Coupon coupons = dao.findCoupon(rs.getString(2));
+                Coupon coupons = dao.findCoupon(rs.getString(3));
                 orders.setCoup_id(coupons);
 
-                Pays pay = dao.getPayById(rs.getInt(3));
+                Pays pay = dao.getPayById(rs.getInt(4));
                 orders.setPay_id(pay);
 
-                Status status = new Status();
-                status.setStatus_id(rs.getInt(4));
+                Status status = dao.getStatusById(rs.getInt(5));
                 orders.setStatus_id(status);
 
-                orders.setProvinces(rs.getString(5));
-                orders.setDistrict(rs.getString(6));
-                orders.setWard(rs.getString(7));
-                orders.setPhone(rs.getString(8));
-                orders.setNote(rs.getString(9));
-                orders.setDate(rs.getString(10));
-                orders.setTotal_money(rs.getInt(11));
+                orders.setProvinces(rs.getString(6));
+                orders.setDistrict(rs.getString(7));
+                orders.setWard(rs.getString(8));
+                orders.setPhone(rs.getString(9));
+                orders.setNote(rs.getString(10));
+                orders.setDate(rs.getString(11));
+                orders.setTotal_money(rs.getInt(12));
 
                 return orders;
             }
@@ -301,51 +316,43 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-    
-    public List<Order_items> getBillDetail(){
+
+    public List<Order_items> getBillDetailOrder(int id){
         List<Order_items> list = new ArrayList<>();
-        String sql = "";
+        String sql = "select * from Order_items where order_id = ?";
         try {
-            
+            PreparedStatement st  = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs  = st.executeQuery();
+            while (rs.next()) {                
+                Order_items oi = new Order_items();
+                oi.setOrderItem_id(rs.getInt(1));
+                
+                Orders o = new OrderDAO().getOrderById(rs.getInt(2));
+                oi.setOrder_id(o);
+                
+                Product p = new CartDAO().getProductbyID(rs.getInt(3));
+                oi.setProduct_id(p);
+                
+                oi.setPrice(rs.getInt(4));
+                oi.setTotal_money(rs.getInt(5));
+                oi.setQuantity(rs.getInt(6));
+                
+                list.add(oi);
+            }
         } catch (Exception e) {
         }
-        return null;
+        return list;
     }
 
     public static void main(String[] args) {
         OrderDAO orderDAO = new OrderDAO();
-
-        // Tạo các đối tượng liên quan
-        Cart cart = new Cart();
-        cart.setCart_id(1); // Giả sử ID của Cart là 1
-
-        Coupon coupon = new Coupon();
-        coupon.setId(1); // Giả sử ID của Coupon là 1
-
-        Pays pay = new Pays();
-        pay.setPay_id(1); // Giả sử ID của Payment là 1
-
-        Status status = new Status();
-        status.setStatus_id(4); // Giả sử ID của Status là 1
-
-        // Tạo đối tượng Orders với dữ liệu giả định
-        Orders order = new Orders();
-        order.setCart_id(cart);
-        order.setCoup_id(coupon);
-        order.setPay_id(pay);
-        order.setStatus_id(status);
-        order.setProvinces("Hà Nội");
-        order.setDistrict("Đống Đa");
-        order.setWard("Phường Trung Liệt");
-        order.setPhone("0123456789");
-        order.setNote("Giao hàng vào buổi sáng");
-        order.setDate("2023-06-05 10:00:00"); // Định dạng yyyy-MM-dd HH:mm:ss
-        order.setTotal_money(500000);
-
-        // Gọi phương thức insertOrder
-        orderDAO.insertOrder(order);
-
-        System.out.println("Order inserted successfully");
-
+        List<Order_items> list = orderDAO.getBillDetailOrder(36);
+        for (Order_items order_items : list) {
+            System.out.println(order_items.toString());
+        }
+        
+        Orders  o  = orderDAO.getOrderById(36);
+        System.out.println(o.toString());
     }
 }

@@ -9,7 +9,14 @@ function calculateTotal() {
             total += price * quantity;
         }
     });
-    $('#totalMoney').text(total.toFixed(2)); // Update the total money in the appropriate element
+    $('#totalMoney').text(total.toFixed(2));
+}
+
+function updateTotalPrice(row) {
+    let price = parseFloat($(row).find('.product-price').text());
+    let quantity = parseInt($(row).find('.quantity-amount').val(), 10);
+    let totalPrice = price * quantity;
+    $(row).find('.total-price').text(totalPrice.toFixed(2) + "đ"); // Update total price for the product
 }
 
 $(document).ready(function () {
@@ -94,41 +101,6 @@ function updateCheckedState(id) {
 }
 
 
-function updateTotalPrice(row) {
-    let priceElement = row.querySelector('.product-price');
-    let quantityElement = row.querySelector('.quantity-amount');
-    let totalPriceElement = row.querySelector('.total-price');
-
-    let price = parseFloat(priceElement.textContent);
-    let quantity = parseInt(quantityElement.value, 10);
-
-    let totalPrice = price * quantity;
-    totalPriceElement.textContent = totalPrice.toFixed();
-}
-
-//function redirectToBoth(event) {
-//    event.preventDefault(); 
-//    window.location.href = "checkout";
-//    window.open("provinces", "_blank"); 
-//}
-
-function redirectToBoth() {
-    // Gửi yêu cầu đến controller checkout
-    fetch('/ProvincesControl', { method: 'get' })
-        .then(response => {
-            if (!response.ok) throw new Error('Checkout failed');
-
-            // Sau khi hoàn thành, gửi yêu cầu đến controller province
-            return fetch('/CheckOutControl', { method: 'get' });
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Province failed');
-
-            // Chuyển hướng tới trang province sau khi hoàn thành cả hai controller
-            window.location.href = '/checkout';
-        })
-        .catch(error => console.error('Error:', error));
-}
 
 
 

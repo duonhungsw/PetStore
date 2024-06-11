@@ -118,8 +118,8 @@ public class DeliveryOrderController extends HttpServlet {
 
                 dao.insertOrderItems(order_items);
 
-                Orders billOrder = dao.getBillOrders();
-                List<Order_items> listBillDetailses = dao.getBillDetail();
+                Orders billOrder = dao.getOrderById(MaxId);
+                List<Order_items> listBillDetailses = dao.getBillDetailOrder(MaxId);
 
 //                    LocalDateTime currentTime = LocalDateTime.now();
                 String tieude = "Cam on quy khach";
@@ -163,16 +163,16 @@ public class DeliveryOrderController extends HttpServlet {
                         + "            <h1>Đây là email tự động, Quý khách vui lòng không trả lời email này</h1>\n"
                         + "        </div>\n"
                         + "        <h1>HeroShop</h1>\n"
-                        + "        <h1>Chào bạn :" + billOrder.getUser().getFullname() + "</h1>\n"
+                        + "        <h1>Chào bạn :" + billOrder.getCart_id().getAcoount_id().getUsername() + "</h1>\n"
                         + "        <h1>Bạn hoặc ai đó đã đăng ký dịch vụ của shop với thông tin sau:</h1>\n"
                         + "        <h2 class=\"important\">Thông tin đơn hàng</h2>\n"
-                        + "        <h2>Mã đơn hàng: " + billOrder.getId() + "</h2>\n"
+                        + "        <h2>Mã đơn hàng: " + billOrder.getOrder_id() + "</h2>\n"
                         + "        <h3>Mã khuyến mãi áp dụng: Không có</h3>\n"
                         + "        <h3>Phí vận chuyển: 0 đồng</h3>\n"
                         + "        <h3>Dịch vụ: Đặt hàng trực tuyến</h3>\n"
                         + "        <h1>Thông tin người nhận</h1>\n"
-                        + "        <h2>Địa chỉ nhận hàng: " + billOrder.getAddress() + "</h2>\n"
-                        + "        <h2>Số điện thoại: " + billOrder.getPhone_number() + "</h2>\n"
+                        + "        <h2>Địa chỉ nhận hàng: " + billOrder.getProvinces() + ", " + billOrder.getDistrict() + ", " + billOrder.getWard() + "</h2>\n"
+                        + "        <h2>Số điện thoại: " + billOrder.getPhone() + "</h2>\n"
                         + "        <h3>Ghi chú đơn hàng: " + billOrder.getNote() + "</h3>\n"
                         + "        <h3>Hình thức thanh toán: Khi nhận hàng</h3>\n"
                         + "        <h4>Sản phẩm đã đặt</h4>\n"
@@ -186,10 +186,10 @@ public class DeliveryOrderController extends HttpServlet {
                 if (listBillDetailses == null) {
                     noidung += "<h1>Khong ton tai</1>/n";
                 } else {
-                    for (OrderDetails listBillDetailse : listBillDetailses) {
+                    for (Order_items listBillDetailse : listBillDetailses) {
                         noidung
                                 += "                <tr>\n"
-                                + "                    <td>" + listBillDetailse.getProduct_id().getTitle() + "</td>\n"
+                                + "                    <td>" + listBillDetailse.getProduct_id().getNameP() + "</td>\n"
                                 + "                    <td>" + listBillDetailse.getPrice() + "$</td>\n"
                                 + "                    <td>" + listBillDetailse.getQuantity() + "</td>\n"
                                 + "                    <td>" + listBillDetailse.getTotal_money() + "</td>\n"
@@ -205,6 +205,7 @@ public class DeliveryOrderController extends HttpServlet {
                 String nguoinhan = acc.getEmail();
                 Email email = new Email();
                 boolean sendSuccess = email.sendMail(nguoinhan, tieude, noidung);
+                dao.resetCoinAccountById(acc.getCoin_id().getCoin_id());
                 System.out.println("done");
             }
 

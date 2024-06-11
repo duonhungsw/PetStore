@@ -1,4 +1,3 @@
-
 package model.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,11 +23,13 @@ public class OrderDTO {
     private String total_money;
     @JsonProperty("couponId")
     private String couponId;
+    @JsonProperty("coinId")
+    private String coinId;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String email, String name, String phone, String province, String district, String ward, String note, String payment, String total_money, String couponId) {
+    public OrderDTO(String email, String name, String phone, String province, String district, String ward, String note, String payment, String total_money, String couponId, String coinId) {
         this.email = email;
         this.name = name;
         this.phone = phone;
@@ -39,6 +40,7 @@ public class OrderDTO {
         this.payment = payment;
         this.total_money = total_money;
         this.couponId = couponId;
+        this.coinId = coinId;
     }
 
     public String getEmail() {
@@ -121,8 +123,16 @@ public class OrderDTO {
         this.couponId = couponId;
     }
 
+    public String getCoinId() {
+        return coinId;
+    }
+
+    public void setCoinId(String coinId) {
+        this.coinId = coinId;
+    }
+
     @Override
     public String toString() {
-        return "OrderDTO{" + "email=" + email + ", name=" + name + ", phone=" + phone + ", province=" + province + ", district=" + district + ", ward=" + ward + ", note=" + note + ", payment=" + payment + ", total_money=" + total_money + ", couponId=" + couponId + '}';
+        return "OrderDTO{" + "email=" + email + ", name=" + name + ", phone=" + phone + ", province=" + province + ", district=" + district + ", ward=" + ward + ", note=" + note + ", payment=" + payment + ", total_money=" + total_money + ", couponId=" + couponId + ", coinId=" + coinId + '}';
     }
 }

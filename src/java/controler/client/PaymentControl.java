@@ -143,7 +143,6 @@ public class PaymentControl extends HttpServlet {
             
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("LOGIN_USER");
-
             if (acc == null) {
                 response.sendRedirect("login.jsp");
                 return;
@@ -151,7 +150,6 @@ public class PaymentControl extends HttpServlet {
             //cart
             CartDAO cartDAO = new CartDAO();
             Cart cart = cartDAO.getCartByUserId(acc.getAccId());
-
             List<Cart_Item> list = cartDAO.getOrderCart_Items(cart.getCart_id());
             //order
             OrderDAO dao = new OrderDAO();
@@ -168,6 +166,10 @@ public class PaymentControl extends HttpServlet {
             Provinces province = provincesVNDAO.getProvincesById(orderData.getProvince());
             Districts districts = provincesVNDAO.getDistrict(orderData.getDistrict());
             Wards ward = provincesVNDAO.getWard(orderData.getWard());
+            System.out.println("-------------");
+            int coinid = Integer.parseInt(orderData.getCoinId());
+            System.out.println(coinid);
+            dao.resetCoinAccountById(coinid);
             
             // Chuyển đổi OrderDTO sang Orders
             Orders order = new Orders();

@@ -2,6 +2,7 @@
 package controler.client;
 
 import daos.CartDAO;
+import daos.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,12 +27,17 @@ public class CartControl extends HttpServlet {
         CartDAO cartDAO  =new CartDAO();
         Cart cart = cartDAO.getCartByUserId(acc.getAccId());
         List<Cart_Item> list = cartDAO.getListCartItem(cart.getCart_id());
+        
+        OrderDAO orderDAO = new OrderDAO();
+        int totalMoney = orderDAO.getTotalMoneyOrders(cart.getCart_id());
+        System.out.println(totalMoney);
 //        
 //        for (Cart_Item cart_Item : list) {
 //            System.out.println(cart_Item.toString());
 //            
 //        }
         request.setAttribute("CI", list);
+        request.setAttribute("TMCI", totalMoney);
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     } 
 
