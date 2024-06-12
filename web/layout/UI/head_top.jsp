@@ -44,7 +44,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="home" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="product.jsp" class="nav-link">Product</a></li>
+                        <li class="nav-item"><a href="product" class="nav-link">Product</a></li>
                         <li class="nav-item"><a href="petservice" class="nav-link">Service</a></li>
                         <li class="nav-item"><a href="blog.jsp" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
