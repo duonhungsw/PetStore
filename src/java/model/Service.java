@@ -6,13 +6,17 @@ public class Service {
     private String service_name;
     private int service_price;
     private String service_img;
+    private int status;
 
-    public Service(int service_id, String service_name, int service_price, String service_img) {
+    public Service(int service_id, String service_name, int service_price, String service_img, int status) {
         this.service_id = service_id;
         this.service_name = service_name;
         this.service_price = service_price;
         this.service_img = service_img;
+        this.status = status;
     }
+
+   
 
     public Service() {
     }
@@ -49,6 +53,14 @@ public class Service {
         this.service_img = service_img;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
     @Override
     public String toString() {
         return "Service{" + "service_id=" + service_id + ", service_name=" + service_name + ", service_price=" + service_price + ", service_img=" + service_img + '}';

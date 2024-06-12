@@ -15,6 +15,20 @@ public class Product {
     public Product() {
     }
 
+    public Product(int prodId, Category cateId, String nameP, String imageProduct, String thumnail, String createdAt, String updatedAt, int delete) {
+        this.prodId = prodId;
+        this.cateId = cateId;
+        this.nameP = nameP;
+        this.imageProduct = imageProduct;
+        this.thumnail = thumnail;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.delete = delete;
+    }
+    
+    
+    
     public Product(int prodId, Category cateId, String nameP, String imageProduct, String thumnail, int quantity, String createdAt, String updatedAt, int delete, Product_Detail productDetail) {
         this.prodId = prodId;
         this.cateId = cateId;
