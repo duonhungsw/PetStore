@@ -34,15 +34,15 @@ public class AdminServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    public void init()
-            throws ServletException {
-        AdminDao ad = new AdminDao();
-        TimeSale ts = ad.getTimeSale();
-        if (ts.getStatus() == 1) {
-            GoldenHour.setGoldenHour(ts.getStartHour(), ts.getStartMinute(), ts.getEndHour(), ts.getEndMinute());
-        }
-    }
+//    @Override
+//    public void init()
+//            throws ServletException {
+//        AdminDao ad = new AdminDao();
+//        TimeSale ts = ad.getTimeSale();
+//        if (ts.getStatus() == 1) {
+//            GoldenHour.setGoldenHour(ts.getStartHour(), ts.getStartMinute(), ts.getEndHour(), ts.getEndMinute());
+//        }
+//    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

@@ -47,7 +47,7 @@
                         <li class="nav-item"><a href="product" class="nav-link">Product</a></li>
                         <li class="nav-item"><a href="petservice" class="nav-link">Service</a></li>
                         <li class="nav-item"><a href="blog.jsp" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="listpurchase" class="nav-link">Contact</a></li>
                         <li class="nav-item" style="margin-left: 100px">
                             <a  href="petServiceCalendar" class="nav-link">
                                 <i class="fa-solid fa-calendar-days" ></i>

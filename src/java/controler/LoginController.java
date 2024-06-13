@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect("admin");
                         break;
                     case 2:
-                        response.sendRedirect("pageForRole2"); 
+                        response.sendRedirect("loadorders"); 
                         break;
                     case 3:
                         response.sendRedirect("petServiceManageControl"); 

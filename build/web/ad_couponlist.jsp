@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.carousel.min.css">
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.theme.default.min.css">
         <link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
+        <link href="./css/style_1.css" rel="stylesheet">
         <style>
             .card {
                 width: 100%;
@@ -108,7 +108,7 @@
                                             <!-- Iterate over the list of books -->
                                             <c:forEach var="cou" items="${requestScope.list}">
                                                 <tr>
-                                                    <td>${cou.couponId}</td>
+                                                    <td>${cou.id}</td>
                                                     <td>${cou.code}</td>
                                                     <td>${cou.discount}</td>
                                                     <td>${cou.time}</td>

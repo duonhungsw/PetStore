@@ -26,7 +26,7 @@ public class AddtoCart extends HttpServlet {
         
         String productId = request.getParameter("productId");
         String quantityString = request.getParameter("quantity");
-        
+        response.sendRedirect("cart");
         CartDAO cartdao = new CartDAO();
         Cart cart  = cartdao.getCartbyUserID(user.getAccId());
         if(productId != null && quantityString !=null){

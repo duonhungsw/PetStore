@@ -16,7 +16,38 @@ import model.State;
 public class CartDAO extends DBContext {
 
     AccountDAO accountDAO = new AccountDAO();
-
+    
+    public Product getProductID(int id) {
+        String sql = "SELECT  [product_id]\n"
+                + "      ,[cate_Id]\n"
+                + "      ,[nameP]\n"
+                + "      ,[imageProduct]\n"
+                + "      ,[thumnail]\n"
+                + "      ,[quantity]\n"
+                + "  FROM [Product]\n"
+                + "  where product_id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Product p = new Product();
+                p.setProdId(rs.getInt(1));
+                Category c = getCategorybyID(rs.getInt(2));
+                p.setCateId(c);
+                p.setNameP(rs.getString(3));
+                p.setImageProduct(rs.getString(4));
+                p.setThumnail(rs.getString(5));
+                p.setQuantity(rs.getInt(6));
+                
+                return p;
+                
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public Cart getCartbyUserID(int id) {
         String sql = "SELECT [cart_id]\n"
                 + "      ,[acc_Id]\n"

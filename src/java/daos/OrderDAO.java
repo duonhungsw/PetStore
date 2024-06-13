@@ -344,6 +344,18 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
+    
+    public void DeleteOrder(int id){
+        String sql = "update Orders\n "
+                + "set status_id = 6\n"
+                + "where order_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public static void main(String[] args) {
         OrderDAO orderDAO = new OrderDAO();

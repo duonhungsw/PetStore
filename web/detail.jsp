@@ -34,10 +34,12 @@
         <%@ include file="layout/UI/header_product.jsp" %>
         <div class="container py-5">
             <div class="row">
+
                 <div class="col-lg-6">
                     <img src="${detail.imageProduct}" class="img-fluid fixed-ratio-image" alt="Product Image">
                 </div>
                 <div class="col-lg-6">
+                    <h1 id="productID" hidden="">${detail.prodId}</h1>
                     <h2 class="fw-bold">${detail.nameP}</h2>
                     <p class="text-muted">${detail.cateId.name}</p>
                     <h3 class="my-4">${detail.productDetail.price}</h3>
@@ -100,11 +102,28 @@
                                 <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                             </div>
                             <input type="hidden" name="prod_Id" value="${detail.id}">
-                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                            <button type="submit" class="btn btn-primary" onclick="addToCart()">Submit Review</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+                                function addToCart(){
+                                var productID = document.getElementById(('productID'));
+                                        $.ajax({
+                                        url: 'addtoCart',
+                                                type: 'post',
+                                                data: productID,
+                                                success: function (data, textStatus, jqXHR) {
+                                                console.log('thanh cong'),
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                console.log('that bai'),
+                                                }
+                                        });
+                                }
+        </script>
     </body>
 </html>

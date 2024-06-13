@@ -2845,7 +2845,8 @@ input[type="button"].btn-block {
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-  width: 100%; }
+  width: 100%;
+}
   .input-group > .form-control,
   .input-group > .form-control-plaintext,
   .input-group > .custom-select,
@@ -7270,10 +7271,11 @@ button.bg-dark:focus {
     margin-right: 0 !important; }
   .mb-lg-0,
   .my-lg-0 {
-    margin-bottom: 0 !important; }
+    margin-left: 450px !important; }
   .ml-lg-0,
   .mx-lg-0 {
-    margin-left: 0 !important; }
+    margin-left: 0 !important; 
+  }
   .m-lg-1 {
     margin: 0.25rem !important; }
   .mt-lg-1,

@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.carousel.min.css">
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.theme.default.min.css">
         <link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
+        <link href="./css/style_1.css" rel="stylesheet">
         <style>
             .card {
                 width: 100%;
@@ -111,13 +111,13 @@
                                             <!-- Iterate over the list of books -->
                                             <c:forEach var="p" items="${requestScope.list}">
                                                 <tr>
-                                                    <td>${p.product.productId}</td>
-                                                    <td>${p.product.name}</td>
-                                                    <td><img src="${p.product.image}" width="80px" height="80px"/></td>
+                                                    <td>${p.product.prodId}</td>
+                                                    <td>${p.product.nameP}</td>
+                                                    <td><img src="${p.product.imageProduct}" width="80px" height="80px"/></td>
                                                     <td>${p.price}</td>
                                                     <td>${p.amount}</td>
                                                     <td>
-                                                        <c:set var="status" scope="session" value="${p.product.deleted}" />
+                                                        <c:set var="status" scope="session" value="${p.product.delete}" />
                                                         <c:if test="${status == 1}">
                                                             Active
                                                         </c:if>
@@ -126,8 +126,8 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a href="updateproduct?id=${p.product.productId}&status=${p.product.deleted}" style="color: blue; text-decoration: none">Change</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a href="updateproduct?id=${p.product.productId}" style="color: blue; text-decoration: none">Update</a>
+                                                        <a href="updateproduct?id=${p.product.prodId}&status=${p.product.delete}" style="color: blue; text-decoration: none">Change</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a href="updateproduct?id=${p.product.prodId}" style="color: blue; text-decoration: none">Update</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

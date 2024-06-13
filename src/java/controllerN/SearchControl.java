@@ -1,7 +1,7 @@
     package controllerN;
 
 import daos.CategoryDAO;
-import daos.PaginationDAO;
+//import daos.PaginationDAO;
 import daos.ProductDAO;
 import daos.SearchDAO;
 import java.io.IOException;
