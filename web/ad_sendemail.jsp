@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.carousel.min.css">
         <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.theme.default.min.css">
         <link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-        <link href="./css/style_1.css" rel="stylesheet">
+        <link href="./css/style.css" rel="stylesheet">
         <style>
 
             .container {
@@ -146,7 +146,7 @@
                                         <form action="sendemail" method="post">
                                             <div class="form-group">
                                                 <label>Recipient</label>
-                                                <input type="text" name="recipient">
+                                                <input type="email" name="recipient">
                                             </div>
                                             <div class="form-group">
                                                 <label>Subject</label>

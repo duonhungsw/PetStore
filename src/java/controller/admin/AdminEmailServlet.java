@@ -4,6 +4,7 @@
  */
 package controller.admin;
 
+import dao.AdminDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Account;
 import util.Email;
 
 /**
@@ -76,12 +78,21 @@ public class AdminEmailServlet extends HttpServlet {
         String subject = request.getParameter("subject");
         String content = request.getParameter("content");
 
-        boolean sendSuccess = Email.sendMail(recipient, subject, content);
-        if (sendSuccess) {
-            request.setAttribute("success", "Send successfully !");
+        AdminDao ad = new AdminDao();
+
+        Account account = ad.getAccountByEmail(recipient);
+
+        if (account != null && account.getRole_id().getRole_id() == 3) {
+            boolean sendSuccess = Email.sendMail(recipient, subject, content);
+            if (sendSuccess) {
+                request.setAttribute("success", "Send successfully !");
+            } else {
+                request.setAttribute("error", "Send not successfully !");
+            }
         } else {
-            request.setAttribute("error", "Send not successfully !");
+            request.setAttribute("error", "Customer haven't register account in website !");
         }
+
         request.getRequestDispatcher("ad_sendemail.jsp").forward(request, response);
     }
 
